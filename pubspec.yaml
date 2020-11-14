@@ -2,7 +2,7 @@ name: widget_to_image
 description: A simple package to convert any of your widgets into an image.
 homepage: https://github.com/nbrucker/widget_to_image
 
-version: 1.0.0
+version: 1.0.1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

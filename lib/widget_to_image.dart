@@ -1,16 +1,27 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 class WidgetToImage {
+	static Future<Image> repaintBoundaryToImage(GlobalKey key) {
+		return new Future.delayed(const Duration(milliseconds: 20), () async {
+			RenderRepaintBoundary repaintBoundary = key.currentContext.findRenderObject();
+
+			ui.Image image = await repaintBoundary.toImage(pixelRatio: 1.0);
+			ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+			return Image.memory(byteData.buffer.asUint8List());
+		});
+	}
+
 	static Future<Image> widgetToImage(Widget widget) async {
 		RenderRepaintBoundary repaintBoundary = RenderRepaintBoundary();
 
 		RenderView renderView = RenderView(
 			child: RenderPositionedBox(alignment: Alignment.center, child: repaintBoundary),
 			configuration: ViewConfiguration(
-				size: ui.window.physicalSize / ui.window.devicePixelRatio,
+				size: Size(double.maxFinite, double.maxFinite),
 				devicePixelRatio: 1.0,
 			),
 			window: null

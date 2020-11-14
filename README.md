@@ -19,10 +19,14 @@ Image image = await WidgetToImage.widgetToImage(Container(
     color: Colors.blue
 ));
 ```
+##### OR
+```dart
+Image image = await WidgetToImage.repaintBoundaryToImage(key);
+```
 
 ## Example
 
-Find the example wiring in the [Widget_to_image example application](https://github.com/nbrucker/widget_to_image/tree/main/example/lib/main.dart).
+Find the example wiring in the [widget_to_image example application](https://github.com/nbrucker/widget_to_image/tree/main/example/lib/main.dart).
 
 ## Details
 
