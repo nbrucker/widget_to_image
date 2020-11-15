@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
 
 import 'package:widget_to_image/widget_to_image.dart';
 
@@ -26,7 +27,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-	Image _image;
+	ByteData _byteData;
 	GlobalKey _globalKey = new GlobalKey();
 
 	@override
@@ -56,12 +57,14 @@ class MyHomePageState extends State<MyHomePage> {
 								onPressed: _callWidgetToImage,
 								child: Text('Widget To Image'),
 							),
-							_image != null ? Container(
+							_byteData != null ? Container(
 								height: 200,
 								decoration: BoxDecoration(
 									border: Border.all(color: Colors.black)
 								),
-								child: _image,
+								child: Image.memory(
+									_byteData.buffer.asUint8List()
+								),
 							) : Container()
 						],
 					),
@@ -71,16 +74,16 @@ class MyHomePageState extends State<MyHomePage> {
 	}
 
 	_callRepaintBoundaryToImage() async {
-		Image image = await WidgetToImage.repaintBoundaryToImage(this._globalKey);
-		setState(() => _image = image);
+		ByteData byteData = await WidgetToImage.repaintBoundaryToImage(this._globalKey);
+		setState(() => _byteData = byteData);
 	}
 
 	_callWidgetToImage() async {
-		Image image = await WidgetToImage.widgetToImage(Container(
+		ByteData byteData = await WidgetToImage.widgetToImage(Container(
 			width: 100,
 			height: 100,
 			color: Colors.blue,
 		));
-		setState(() => _image = image);
+		setState(() => _byteData = byteData);
 	}
 }

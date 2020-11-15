@@ -4,18 +4,18 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 class WidgetToImage {
-	static Future<Image> repaintBoundaryToImage(GlobalKey key) {
+	static Future<ByteData> repaintBoundaryToImage(GlobalKey key) {
 		return new Future.delayed(const Duration(milliseconds: 20), () async {
 			RenderRepaintBoundary repaintBoundary = key.currentContext.findRenderObject();
 
 			ui.Image image = await repaintBoundary.toImage(pixelRatio: 1.0);
 			ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
-			return Image.memory(byteData.buffer.asUint8List());
+			return byteData;
 		});
 	}
 
-	static Future<Image> widgetToImage(Widget widget) async {
+	static Future<ByteData> widgetToImage(Widget widget) async {
 		RenderRepaintBoundary repaintBoundary = RenderRepaintBoundary();
 
 		RenderView renderView = RenderView(
@@ -47,6 +47,6 @@ class WidgetToImage {
 		ui.Image image = await repaintBoundary.toImage(pixelRatio: 1.0);
 		ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
-		return Image.memory(byteData.buffer.asUint8List());
+		return byteData;
 	}
 }

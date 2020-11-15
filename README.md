@@ -13,7 +13,7 @@ import 'package:widget_to_image/widget_to_image.dart';
 ### Use the package
 
 ```dart
-Image image = await WidgetToImage.widgetToImage(Container(
+ByteData byteData = await WidgetToImage.widgetToImage(Container(
     width: 100,
     height: 100,
     color: Colors.blue
@@ -21,7 +21,7 @@ Image image = await WidgetToImage.widgetToImage(Container(
 ```
 ##### OR
 ```dart
-Image image = await WidgetToImage.repaintBoundaryToImage(key);
+ByteData byteData = await WidgetToImage.repaintBoundaryToImage(key);
 ```
 
 ## Example
