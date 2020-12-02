@@ -1,3 +1,7 @@
+## 1.0.3
+
+- pixelRatio as arguments
+
 ## 1.0.2
 
 - Now returns ByteData instead of Image for more flexibility
