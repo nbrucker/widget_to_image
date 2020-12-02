@@ -15,14 +15,19 @@ class WidgetToImage {
 		});
 	}
 
-	static Future<ByteData> widgetToImage(Widget widget, {double pixelRatio = 1.0}) async {
+	static Future<ByteData> widgetToImage(Widget widget, {
+		Alignment alignment = Alignment.center,
+		Size size = const Size(double.maxFinite, double.maxFinite),
+		double devicePixelRatio = 1.0,
+		double pixelRatio = 1.0
+	}) async {
 		RenderRepaintBoundary repaintBoundary = RenderRepaintBoundary();
 
 		RenderView renderView = RenderView(
-			child: RenderPositionedBox(alignment: Alignment.center, child: repaintBoundary),
+			child: RenderPositionedBox(alignment: alignment, child: repaintBoundary),
 			configuration: ViewConfiguration(
-				size: Size(double.maxFinite, double.maxFinite),
-				devicePixelRatio: 1.0,
+				size: size,
+				devicePixelRatio: devicePixelRatio,
 			),
 			window: null
 		);

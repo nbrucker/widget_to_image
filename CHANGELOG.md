@@ -1,6 +1,10 @@
+## 1.0.4
+
+- Added `alignment`, `size` and `devicePixelRatio` as arguments
+
 ## 1.0.3
 
-- pixelRatio as arguments
+- `pixelRatio` as arguments
 
 ## 1.0.2
 
