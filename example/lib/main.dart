@@ -1,89 +1,85 @@
-import 'package:flutter/material.dart';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:widget_to_image/widget_to_image.dart';
 
 void main() {
-	runApp(MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-	@override
-	Widget build(BuildContext context) {
-		return MaterialApp(
-			title: 'Widget To Image',
-			home: MyHomePage(),
-		);
-	}
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'Widget To Image',
+      home: MyHomePage(),
+    );
+  }
 }
 
 class MyHomePage extends StatefulWidget {
-	const MyHomePage({
-		Key key
-	});
+  const MyHomePage({Key? key}) : super(key: key);
 
-	@override
-	MyHomePageState createState() => MyHomePageState();
+  @override
+  MyHomePageState createState() => MyHomePageState();
 }
 
 class MyHomePageState extends State<MyHomePage> {
-	ByteData _byteData;
-	GlobalKey _globalKey = new GlobalKey();
+  ByteData? _byteData;
+  final GlobalKey _globalKey = GlobalKey();
 
-	@override
-	void initState() {
-		super.initState();
-	}
+  @override
+  void initState() {
+    super.initState();
+  }
 
-	@override
-	void dispose() {
-		super.dispose();
-	}
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
-	@override
-	Widget build(BuildContext context) {
-		return  RepaintBoundary(
-			key: _globalKey,
-			child: Scaffold(
-				body: Center(
-					child: Column(
-						mainAxisAlignment: MainAxisAlignment.center,
-						children: [
-							RaisedButton(
-								onPressed: _callRepaintBoundaryToImage,
-								child: Text('Repaint Boundary To Image'),
-							),
-							RaisedButton(
-								onPressed: _callWidgetToImage,
-								child: Text('Widget To Image'),
-							),
-							_byteData != null ? Container(
-								height: 200,
-								decoration: BoxDecoration(
-									border: Border.all(color: Colors.black)
-								),
-								child: Image.memory(
-									_byteData.buffer.asUint8List()
-								),
-							) : Container()
-						],
-					),
-				)
-			),
-		);
-	}
+  @override
+  Widget build(BuildContext context) {
+    return RepaintBoundary(
+      key: _globalKey,
+      child: Scaffold(
+          body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: _callRepaintBoundaryToImage,
+              child: const Text('Repaint Boundary To Image'),
+            ),
+            ElevatedButton(
+              onPressed: _callWidgetToImage,
+              child: const Text('Widget To Image'),
+            ),
+            if (_byteData != null)
+              Container(
+                height: 200,
+                decoration: BoxDecoration(border: Border.all()),
+                child: Image.memory(_byteData!.buffer.asUint8List()),
+              )
+            else
+              Container()
+          ],
+        ),
+      )),
+    );
+  }
 
-	_callRepaintBoundaryToImage() async {
-		ByteData byteData = await WidgetToImage.repaintBoundaryToImage(this._globalKey);
-		setState(() => _byteData = byteData);
-	}
+  Future<void> _callRepaintBoundaryToImage() async {
+    final byteData = await WidgetToImage.repaintBoundaryToImage(_globalKey);
+    setState(() => _byteData = byteData);
+  }
 
-	_callWidgetToImage() async {
-		ByteData byteData = await WidgetToImage.widgetToImage(Container(
-			width: 100,
-			height: 100,
-			color: Colors.blue,
-		));
-		setState(() => _byteData = byteData);
-	}
+  Future<void> _callWidgetToImage() async {
+    final byteData = await WidgetToImage.widgetToImage(Container(
+      width: 100,
+      height: 100,
+      color: Colors.blue,
+    ));
+    setState(() => _byteData = byteData);
+  }
 }
