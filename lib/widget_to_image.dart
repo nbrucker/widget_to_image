@@ -29,14 +29,14 @@ class WidgetToImage {
         size: size,
         devicePixelRatio: devicePixelRatio,
       ),
-      window: RenderingFlutterBinding().window,
+      window: WidgetsBinding.instance!.platformDispatcher.views.first,
     );
 
     final pipelineOwner = PipelineOwner();
     pipelineOwner.rootNode = renderView;
     renderView.prepareInitialFrame();
 
-    final buildOwner = BuildOwner();
+    final buildOwner = BuildOwner(focusManager: FocusManager());
     final RenderObjectToWidgetElement rootElement = RenderObjectToWidgetAdapter(
       container: repaintBoundary,
       child: widget,
