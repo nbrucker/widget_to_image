@@ -6,12 +6,12 @@ import 'dart:ui' as ui;
 class WidgetToImage {
 	static Future<ByteData> repaintBoundaryToImage(GlobalKey key, {double pixelRatio = 1.0}) {
 		return new Future.delayed(const Duration(milliseconds: 20), () async {
-			RenderRepaintBoundary repaintBoundary = key.currentContext.findRenderObject();
+			RenderRepaintBoundary repaintBoundary = key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
 
 			ui.Image image = await repaintBoundary.toImage(pixelRatio: pixelRatio);
-			ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+			ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
-			return byteData;
+			return byteData!;
 		});
 	}
 
@@ -29,14 +29,14 @@ class WidgetToImage {
 				size: size,
 				devicePixelRatio: devicePixelRatio,
 			),
-			window: null
+			window: WidgetsBinding.instance!.platformDispatcher.views.first,
 		);
 
 		PipelineOwner pipelineOwner = PipelineOwner();
 		pipelineOwner.rootNode = renderView;
 		renderView.prepareInitialFrame();
 
-		BuildOwner buildOwner = BuildOwner();
+		BuildOwner buildOwner = BuildOwner(focusManager: FocusManager());
 		RenderObjectToWidgetElement rootElement = RenderObjectToWidgetAdapter(
 			container: repaintBoundary,
 			child: widget,
@@ -49,8 +49,8 @@ class WidgetToImage {
 		pipelineOwner.flushPaint();
 
 		ui.Image image = await repaintBoundary.toImage(pixelRatio: pixelRatio);
-		ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+		ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
-		return byteData;
+		return byteData!;
 	}
 }

@@ -19,16 +19,16 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
 	const MyHomePage({
-		Key key
-	});
+		Key? key
+	}) : super(key: key);
 
 	@override
 	MyHomePageState createState() => MyHomePageState();
 }
 
 class MyHomePageState extends State<MyHomePage> {
-	ByteData _byteData;
-	GlobalKey _globalKey = new GlobalKey();
+	ByteData? _byteData;
+	GlobalKey _globalKey = GlobalKey();
 
 	@override
 	void initState() {
@@ -49,11 +49,11 @@ class MyHomePageState extends State<MyHomePage> {
 					child: Column(
 						mainAxisAlignment: MainAxisAlignment.center,
 						children: [
-							RaisedButton(
+							ElevatedButton(
 								onPressed: _callRepaintBoundaryToImage,
 								child: Text('Repaint Boundary To Image'),
 							),
-							RaisedButton(
+							ElevatedButton(
 								onPressed: _callWidgetToImage,
 								child: Text('Widget To Image'),
 							),
@@ -63,7 +63,7 @@ class MyHomePageState extends State<MyHomePage> {
 									border: Border.all(color: Colors.black)
 								),
 								child: Image.memory(
-									_byteData.buffer.asUint8List()
+									_byteData!.buffer.asUint8List()
 								),
 							) : Container()
 						],

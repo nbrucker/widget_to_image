@@ -2,10 +2,10 @@ name: widget_to_image
 description: A simple package to convert any of your widgets into an image.
 homepage: https://github.com/nbrucker/widget_to_image
 
-version: 1.0.4
+version: 2.0.0
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
