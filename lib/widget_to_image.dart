@@ -29,7 +29,7 @@ class WidgetToImage {
 				size: size,
 				devicePixelRatio: devicePixelRatio,
 			),
-			window: WidgetsBinding.instance!.platformDispatcher.views.first,
+			window: WidgetsBinding.instance.platformDispatcher.views.first,
 		);
 
 		PipelineOwner pipelineOwner = PipelineOwner();
