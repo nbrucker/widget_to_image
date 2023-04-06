@@ -17,7 +17,7 @@ class WidgetToImage {
 
 	static Future<ByteData> widgetToImage(Widget widget, {
 		Alignment alignment = Alignment.center,
-		Size size = const Size(double.maxFinite, double.maxFinite),
+		required Size size,
 		double devicePixelRatio = 1.0,
 		double pixelRatio = 1.0
 	}) async {
@@ -29,7 +29,7 @@ class WidgetToImage {
 				size: size,
 				devicePixelRatio: devicePixelRatio,
 			),
-			window: WidgetsBinding.instance!.platformDispatcher.views.first,
+			window: WidgetsBinding.instance.platformDispatcher.views.first,
 		);
 
 		PipelineOwner pipelineOwner = PipelineOwner();
