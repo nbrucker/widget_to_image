@@ -79,11 +79,14 @@ class MyHomePageState extends State<MyHomePage> {
 	}
 
 	_callWidgetToImage() async {
-		ByteData byteData = await WidgetToImage.widgetToImage(Container(
-			width: 100,
-			height: 100,
-			color: Colors.blue,
-		));
+		ByteData byteData = await WidgetToImage.widgetToImage(
+      Container(
+        width: 100,
+        height: 100,
+        color: Colors.blue,
+      ),
+      size: Size(100,100),
+    );
 		setState(() => _byteData = byteData);
 	}
 }
